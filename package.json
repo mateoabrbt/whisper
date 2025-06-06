@@ -1,0 +1,38 @@
+{
+  "name": "whistle",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "14.1.0",
+    "@legendapp/list": "1.0.15",
+    "@react-navigation/bottom-tabs": "7.3.14",
+    "@react-navigation/elements": "2.4.3",
+    "@react-navigation/native": "7.1.10",
+    "@react-navigation/stack": "7.3.3",
+    "@reduxjs/toolkit": "^2.8.2",
+    "axios": "1.9.0",
+    "expo": "~53.0.11",
+    "expo-secure-store": "14.2.3",
+    "react": "19.0.0",
+    "react-native": "0.79.3",
+    "react-native-gesture-handler": "^2.25.0",
+    "react-native-reanimated": "3.18.0",
+    "react-native-safe-area-context": "5.4.1",
+    "react-native-screens": "4.11.1",
+    "react-redux": "^9.2.0",
+    "socket.io-client": "4.8.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.27.4",
+    "@types/react": "~19.0.14",
+    "typescript": "~5.8.3"
+  },
+  "private": true,
+  "packageManager": "yarn@4.9.2"
+}
