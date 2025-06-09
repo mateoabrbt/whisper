@@ -1,21 +1,21 @@
-import axios from "axios";
+import axios from 'axios';
 
 const URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const getUser = async (token: string) => {
   try {
     if (!URL) {
-      throw new Error("API URL is not defined in environment variables.");
+      throw new Error('API URL is not defined in environment variables.');
     }
     const response = await axios.get(`${URL}/users/me`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
       timeout: 10000,
     });
     if (response.status !== 200) {
-      throw new Error(response.data?.message || "Get user failed");
+      throw new Error(response.data?.message || 'Get user failed');
     }
     return response.data;
   } catch (error: any) {
@@ -23,13 +23,13 @@ export const getUser = async (token: string) => {
       return {
         error: true,
         message:
-          error.response?.data?.message || error.message || "Network error",
+          error.response?.data?.message || error.message || 'Network error',
         status: error.response?.status,
       };
     }
     return {
       error: true,
-      message: error.message || "An unknown error occurred",
+      message: error.message || 'An unknown error occurred',
     };
   }
 };

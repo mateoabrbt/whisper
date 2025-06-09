@@ -1,4 +1,4 @@
-type Status = "loading" | "connected" | "disconnected" | undefined;
+type Status = 'loading' | 'connected' | 'disconnected' | undefined;
 
 interface Session {
   accessToken: string;

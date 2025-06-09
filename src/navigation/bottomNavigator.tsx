@@ -1,25 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import type { RouteProp } from "@react-navigation/native";
+import type {RouteProp} from '@react-navigation/native';
 import type {
   BottomTabScreenProps,
   BottomTabNavigationProp,
-} from "@react-navigation/bottom-tabs";
+} from '@react-navigation/bottom-tabs';
 
-import ChatNavigator, {
-  ChatStackScreens,
-  ChatStackScreensParams,
-} from "./chatNavigator";
-import ProfileNavigator, {
+import ChatNavigator from './chatNavigator';
+import ProfileNavigator from './profileNavigator';
+
+import type {ChatStackScreens, ChatStackScreensParams} from './chatNavigator';
+import type {
   ProfileStackScreens,
   ProfileStackScreensParams,
-} from "./profileNavigator";
+} from './profileNavigator';
 
 export enum BottomNavigatorScreens {
-  ChatNavigator = "ChatNavigator",
-  ProfileNavigator = "ProfileNavigator",
+  ChatNavigator = 'ChatNavigator',
+  ProfileNavigator = 'ProfileNavigator',
 }
 
 export type BottomNavigatorScreensParams = {
@@ -40,15 +40,15 @@ export type BottomNavigatorScreensParams = {
 };
 
 export type BottomNavScreenProps<
-  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens
+  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens,
 > = BottomTabScreenProps<BottomNavigatorScreensParams, RouteName>;
 
 export type BottomNavNavigationProp<
-  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens
+  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens,
 > = BottomTabNavigationProp<BottomNavigatorScreensParams, RouteName>;
 
 export type BottomNavRouteProp<
-  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens
+  RouteName extends keyof BottomNavigatorScreensParams = BottomNavigatorScreens,
 > = RouteProp<BottomNavigatorScreensParams, RouteName>;
 
 const Tab = createBottomTabNavigator();
@@ -57,9 +57,8 @@ function BottomNavigator(): React.JSX.Element {
   return (
     <Tab.Navigator
       backBehavior="none"
-      screenOptions={{ headerShown: false }}
-      initialRouteName={BottomNavigatorScreens.ChatNavigator}
-    >
+      screenOptions={{headerShown: false}}
+      initialRouteName={BottomNavigatorScreens.ChatNavigator}>
       <Tab.Screen
         component={ChatNavigator}
         name={BottomNavigatorScreens.ChatNavigator}

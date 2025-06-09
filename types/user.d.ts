@@ -5,7 +5,7 @@ interface User {
   firstName?: string;
   lastName?: string;
   refreshToken?: string;
-  role: "USER" | "ADMIN";
+  role: 'USER' | 'ADMIN';
   createdAt: Date;
   updatedAt: Date;
   messagesSent: Message[];

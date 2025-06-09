@@ -1,0 +1,6 @@
+ios
+.yarn
+android
+app.json
+.yarnrc.yml
+node_modules

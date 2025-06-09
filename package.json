@@ -30,8 +30,18 @@
   },
   "devDependencies": {
     "@babel/core": "7.27.4",
+    "@react-native/eslint-config": "0.79.3",
     "@types/react": "~19.0.14",
-    "typescript": "~5.8.3"
+    "eslint": "8.57.1",
+    "eslint-import-resolver-typescript": "4.4.3",
+    "eslint-plugin-ft-flow": "3.0.11",
+    "eslint-plugin-import": "2.31.0",
+    "eslint-plugin-no-secrets": "2.2.1",
+    "eslint-plugin-perfectionist": "4.14.0",
+    "eslint-plugin-regexp": "2.9.0",
+    "eslint-plugin-write-good-comments": "0.2.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "8.33.1"
   },
   "private": true,
   "packageManager": "yarn@4.9.2"

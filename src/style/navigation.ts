@@ -1,4 +1,7 @@
-import { Theme, DefaultTheme } from "@react-navigation/native";
+import {DefaultTheme} from '@react-navigation/native';
+
+import type {Theme} from '@react-navigation/native';
+
 import {
   WHITE,
   BLACK,
@@ -10,11 +13,11 @@ import {
   LIGHT_BORDER,
   DARK_BACKGROUND,
   LIGHT_BACKGROUND,
-} from "@style/colors";
+} from '@style/colors';
 
 export const Light = (): Theme => ({
   dark: false,
-  fonts: { ...DefaultTheme.fonts },
+  fonts: {...DefaultTheme.fonts},
   colors: {
     text: BLACK,
     card: LIGHT_CARD,
@@ -27,7 +30,7 @@ export const Light = (): Theme => ({
 
 export const Dark = () => ({
   dark: true,
-  fonts: { ...DefaultTheme.fonts },
+  fonts: {...DefaultTheme.fonts},
   colors: {
     text: WHITE,
     card: DARK_CARD,

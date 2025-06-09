@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { createStackNavigator } from "@react-navigation/stack";
+import {createStackNavigator} from '@react-navigation/stack';
 
-import type { RouteProp } from "@react-navigation/native";
+import type {RouteProp} from '@react-navigation/native';
 import type {
   StackScreenProps,
   StackNavigationProp,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 
-import Profile from "@screen/profile/profile";
+import Profile from '@screen/profile/profile';
 
 export enum ProfileStackScreens {
-  Profile = "Profile",
+  Profile = 'Profile',
 }
 
 export type ProfileStackScreensParams = {
@@ -19,15 +19,15 @@ export type ProfileStackScreensParams = {
 };
 
 export type ProfileNavScreenProps<
-  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens
+  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens,
 > = StackScreenProps<ProfileStackScreensParams, RouteName>;
 
 export type ProfileNavNavigationProp<
-  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens
+  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens,
 > = StackNavigationProp<ProfileStackScreensParams, RouteName>;
 
 export type ProfileNavRouteProp<
-  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens
+  RouteName extends keyof ProfileStackScreensParams = ProfileStackScreens,
 > = RouteProp<ProfileStackScreensParams, RouteName>;
 
 function ProfileNavigator(): React.JSX.Element {

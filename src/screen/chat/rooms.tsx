@@ -1,36 +1,37 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useState, useEffect, useCallback } from "react";
+import {useState, useEffect, useCallback} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import { Ionicons } from "@expo/vector-icons";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { LegendList, LegendListRenderItemProps } from "@legendapp/list";
+import {LegendList} from '@legendapp/list';
+import {Ionicons} from '@expo/vector-icons';
+import {useNavigation} from '@react-navigation/native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
-import { allRooms } from "@api/room";
-import { useSocket } from "@hook/useSocket";
-import { useAppSelector } from "@redux/hook";
-import { useNavigation } from "@react-navigation/native";
-import {
-  ChatStackScreens,
-  ChatNavNavigationProp,
-} from "@navigation/chatNavigator";
+import type {LegendListRenderItemProps} from '@legendapp/list';
+
+import {allRooms} from '@api/room';
+import {useSocket} from '@hook/useSocket';
+import {useAppSelector} from '@redux/hook';
+import {ChatStackScreens} from '@navigation/chatNavigator';
+
+import type {ChatNavNavigationProp} from '@navigation/chatNavigator';
 
 function Rooms(): React.JSX.Element {
-  const { socket } = useSocket();
+  const {socket} = useSocket();
   const [data, setData] = useState<Room[]>([]);
-  const { session } = useAppSelector((state) => state.user);
+  const {session} = useAppSelector(state => state.user);
   const navigate =
     useNavigation<ChatNavNavigationProp<ChatStackScreens.Rooms>>().navigate;
 
   const getRooms = useCallback(async () => {
     if (!session) {
-      console.error("No session found");
+      console.error('No session found');
       return;
     }
     try {
       const response: Room[] = await allRooms(session.accessToken);
       setData(response);
-    } catch (error: any) {
-      console.error("Error fetching rooms:", error);
+    } catch (error) {
+      console.error('Error fetching rooms:', error);
     }
   }, []);
 
@@ -41,11 +42,11 @@ function Rooms(): React.JSX.Element {
   useEffect(() => {
     if (!socket) return;
 
-    socket.emit("connectToRoom");
-    socket.on("newMessage", (message: Message) => {
-      setData((prevData) => {
+    socket.emit('connectToRoom');
+    socket.on('newMessage', (message: Message) => {
+      setData(prevData => {
         const roomIndex = prevData.findIndex(
-          (room) => room.id === message.roomId
+          room => room.id === message.roomId,
         );
 
         if (roomIndex !== -1) {
@@ -64,18 +65,17 @@ function Rooms(): React.JSX.Element {
     });
 
     return () => {
-      socket.off("newMessage");
+      socket.off('newMessage');
     };
   }, [socket]);
 
   const renderItem = useCallback(
     ({
-      item: { id, name, description, messages },
+      item: {id, name, description, messages},
     }: LegendListRenderItemProps<Room>) => (
       <TouchableOpacity
         style={styles.item}
-        onPress={() => navigate(ChatStackScreens.Chat, { id })}
-      >
+        onPress={() => navigate(ChatStackScreens.Chat, {id})}>
         <View style={styles.contentContainer}>
           <View style={styles.titleContainer}>
             <Text style={styles.title}>{name}</Text>
@@ -89,19 +89,19 @@ function Rooms(): React.JSX.Element {
           size={24}
           color="black"
           name="chevron-forward-outline"
-          style={{ alignSelf: "center" }}
+          style={{alignSelf: 'center'}}
         />
       </TouchableOpacity>
     ),
-    []
+    [navigate],
   );
 
   return (
-    <SafeAreaView edges={["left", "right", "bottom"]} style={styles.container}>
+    <SafeAreaView edges={['left', 'right', 'bottom']} style={styles.container}>
       <LegendList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={item => item.id}
       />
     </SafeAreaView>
   );
@@ -110,16 +110,16 @@ function Rooms(): React.JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "center",
+    backgroundColor: '#fff',
+    justifyContent: 'center',
   },
 
   item: {
     padding: 16,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    justifyContent: "space-between",
+    borderBottomColor: '#ccc',
+    justifyContent: 'space-between',
   },
 
   contentContainer: {
@@ -128,23 +128,23 @@ const styles = StyleSheet.create({
 
   titleContainer: {
     columnGap: 8,
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
   },
 
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 
   description: {
     fontSize: 12,
-    color: "#666",
+    color: '#666',
   },
 
   message: {
     fontSize: 16,
-    color: "#333",
+    color: '#333',
   },
 });
 

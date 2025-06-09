@@ -1,31 +1,31 @@
-import React from "react";
+import React from 'react';
 
-import { createStackNavigator } from "@react-navigation/stack";
+import {createStackNavigator} from '@react-navigation/stack';
 
-import type { RouteProp } from "@react-navigation/native";
+import type {RouteProp} from '@react-navigation/native';
 import type {
   StackScreenProps,
   StackNavigationProp,
-} from "@react-navigation/stack";
+} from '@react-navigation/stack';
 
-import Loading from "@screen/loading";
-import Login from "@screen/auth/login";
-import Signup from "@screen/auth/signup";
-import { useAppSelector } from "@redux/hook";
-import ForgotPassword from "@screen/auth/forgotPassword";
+import Loading from '@screen/loading';
+import Login from '@screen/auth/login';
+import Signup from '@screen/auth/signup';
+import {useAppSelector} from '@redux/hook';
+import ForgotPassword from '@screen/auth/forgotPassword';
 
-import BottomNavigator from "./bottomNavigator";
+import BottomNavigator from './bottomNavigator';
 
 import type {
   BottomNavigatorScreens,
   BottomNavigatorScreensParams,
-} from "./bottomNavigator";
+} from './bottomNavigator';
 
 export enum RootStackScreens {
-  Login = "Login",
-  Signup = "Signup",
-  ForgotPassword = "ForgotPassword",
-  BottomNavigator = "BottomNavigator",
+  Login = 'Login',
+  Signup = 'Signup',
+  ForgotPassword = 'ForgotPassword',
+  BottomNavigator = 'BottomNavigator',
 }
 
 export type RootStackScreensParams = {
@@ -42,33 +42,33 @@ export type RootStackScreensParams = {
 };
 
 export type RootNavScreenProps<
-  RouteName extends keyof RootStackScreensParams = RootStackScreens
+  RouteName extends keyof RootStackScreensParams = RootStackScreens,
 > = StackScreenProps<RootStackScreensParams, RouteName>;
 
 export type RootNavNavigationProp<
-  RouteName extends keyof RootStackScreensParams = RootStackScreens
+  RouteName extends keyof RootStackScreensParams = RootStackScreens,
 > = StackNavigationProp<RootStackScreensParams, RouteName>;
 
 export type RootNavRouteProp<
-  RouteName extends keyof RootStackScreensParams = RootStackScreens
+  RouteName extends keyof RootStackScreensParams = RootStackScreens,
 > = RouteProp<RootStackScreensParams, RouteName>;
 
 function RootNavigator(): React.JSX.Element {
   const Stack = createStackNavigator();
-  const { status } = useAppSelector((state) => state.user);
+  const {status} = useAppSelector(state => state.user);
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return <Loading />;
   }
 
   return (
     <Stack.Navigator>
-      {status === "disconnected" ? (
+      {status === 'disconnected' ? (
         <Stack.Group>
           <Stack.Screen
             component={Login}
             name={RootStackScreens.Login}
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             component={ForgotPassword}
@@ -79,7 +79,7 @@ function RootNavigator(): React.JSX.Element {
       ) : (
         <Stack.Screen
           component={BottomNavigator}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
           name={RootStackScreens.BottomNavigator}
         />
       )}

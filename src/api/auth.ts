@@ -1,27 +1,27 @@
-import axios from "axios";
+import axios from 'axios';
 
 const URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const login = async (email: string, password: string) => {
   try {
     if (!email || !password) {
-      throw new Error("Email and password are required.");
+      throw new Error('Email and password are required.');
     }
     const body = {
       email: email.trim(),
       password: password.trim(),
     };
     if (!URL) {
-      throw new Error("API URL is not defined in environment variables.");
+      throw new Error('API URL is not defined in environment variables.');
     }
     const response = await axios.post(`${URL}/auth/login`, body, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       timeout: 10000,
     });
     if (response.status !== 200) {
-      throw new Error(response.data?.message || "Post login failed");
+      throw new Error(response.data?.message || 'Post login failed');
     }
     return response.data;
   } catch (error: any) {
@@ -29,13 +29,13 @@ export const login = async (email: string, password: string) => {
       return {
         error: true,
         message:
-          error.response?.data?.message || error.message || "Network error",
+          error.response?.data?.message || error.message || 'Network error',
         status: error.response?.status,
       };
     }
     return {
       error: true,
-      message: error.message || "An unknown error occurred",
+      message: error.message || 'An unknown error occurred',
     };
   }
 };
@@ -43,11 +43,11 @@ export const login = async (email: string, password: string) => {
 export const signup = async (
   email: string,
   username: string,
-  password: string
+  password: string,
 ) => {
   try {
     if (!email || !username || !password) {
-      throw new Error("Email and password are required.");
+      throw new Error('Email and password are required.');
     }
     const body = {
       email: email.trim(),
@@ -55,16 +55,16 @@ export const signup = async (
       password: password.trim(),
     };
     if (!URL) {
-      throw new Error("API URL is not defined in environment variables.");
+      throw new Error('API URL is not defined in environment variables.');
     }
     const response = await axios.post(`${URL}/auth/register`, body, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       timeout: 10000,
     });
     if (response.status !== 201) {
-      throw new Error(response.data?.message || "Post register failed");
+      throw new Error(response.data?.message || 'Post register failed');
     }
     return response.data;
   } catch (error: any) {
@@ -72,13 +72,13 @@ export const signup = async (
       return {
         error: true,
         message:
-          error.response?.data?.message || error.message || "Network error",
+          error.response?.data?.message || error.message || 'Network error',
         status: error.response?.status,
       };
     }
     return {
       error: true,
-      message: error.message || "An unknown error occurred",
+      message: error.message || 'An unknown error occurred',
     };
   }
 };
@@ -86,16 +86,16 @@ export const signup = async (
 export const logout = async () => {
   try {
     if (!URL) {
-      throw new Error("API URL is not defined in environment variables.");
+      throw new Error('API URL is not defined in environment variables.');
     }
     const response = await axios.post(`${URL}/auth/logout`, undefined, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       timeout: 10000,
     });
     if (response.status !== 204) {
-      throw new Error(response.data?.message || "Post logout failed");
+      throw new Error(response.data?.message || 'Post logout failed');
     }
     return response.data;
   } catch (error: any) {
@@ -103,36 +103,36 @@ export const logout = async () => {
       return {
         error: true,
         message:
-          error.response?.data?.message || error.message || "Network error",
+          error.response?.data?.message || error.message || 'Network error',
         status: error.response?.status,
       };
     }
     return {
       error: true,
-      message: error.message || "An unknown error occurred",
+      message: error.message || 'An unknown error occurred',
     };
   }
 };
 
-export const refresh = async (refresh: string) => {
+export const refresh = async (refreshToken: string) => {
   try {
-    if (!refresh) {
-      throw new Error("Refresh token is required.");
+    if (!refreshToken) {
+      throw new Error('Refresh token is required.');
     }
     const body = {
-      refreshToken: refresh.trim(),
+      refreshToken: refreshToken.trim(),
     };
     if (!URL) {
-      throw new Error("API URL is not defined in environment variables.");
+      throw new Error('API URL is not defined in environment variables.');
     }
     const response = await axios.post(`${URL}/auth/refresh`, body, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       timeout: 10000,
     });
     if (response.status !== 200) {
-      throw new Error(response.data?.message || "Post refresh failed");
+      throw new Error(response.data?.message || 'Post refresh failed');
     }
     return response.data;
   } catch (error: any) {
@@ -140,13 +140,13 @@ export const refresh = async (refresh: string) => {
       return {
         error: true,
         message:
-          error.response?.data?.message || error.message || "Network error",
+          error.response?.data?.message || error.message || 'Network error',
         status: error.response?.status,
       };
     }
     return {
       error: true,
-      message: error.message || "An unknown error occurred",
+      message: error.message || 'An unknown error occurred',
     };
   }
 };

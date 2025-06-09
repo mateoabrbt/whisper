@@ -3,9 +3,18 @@ interface Message {
   content: string;
   senderId: string;
   createdAt: Date;
-  receivedAt?: Date;
-  readAt?: Date;
   sender: Pick<User, "email" | "username" | "id">;
   roomId: string;
   room: Room;
+  status: MessageStatus[];
+}
+
+interface MessageStatus {
+  id: string;
+  userId: string;
+  messageId: string;
+  receivedAt?: Date | null;
+  readAt?: Date | null;
+  createdAt: Date;
+  user: Pick<User, "email" | "username" | "id">;
 }
