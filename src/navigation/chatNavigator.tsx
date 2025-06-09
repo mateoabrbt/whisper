@@ -18,7 +18,7 @@ export enum ChatStackScreens {
 
 export type ChatStackScreensParams = {
   [ChatStackScreens.Rooms]: undefined;
-  [ChatStackScreens.Chat]: {id: string};
+  [ChatStackScreens.Chat]: {room: Omit<Room, 'messages'>};
 };
 
 export type ChatNavScreenProps<

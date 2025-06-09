@@ -9,6 +9,7 @@
       "@redux/*": ["redux/*"],
       "@style/*": ["style/*"],
       "@screen/*": ["screen/*"],
+      "@context/*": ["context/*"],
       "@component/*": ["component/*"],
       "@navigation/*": ["navigation/*"]
     }
