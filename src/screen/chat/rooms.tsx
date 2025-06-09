@@ -82,7 +82,7 @@ function Rooms(): React.JSX.Element {
             <Text style={styles.description}>{description}</Text>
           </View>
           <Text numberOfLines={2} style={styles.message}>
-            {messages[0].sender.username} : {messages[0].content}
+            {messages?.[0].sender.username} : {messages?.[0].content}
           </Text>
         </View>
         <Ionicons
