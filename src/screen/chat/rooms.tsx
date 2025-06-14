@@ -1,37 +1,41 @@
-import {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import {LegendList} from '@legendapp/list';
-import {Ionicons} from '@expo/vector-icons';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import { LegendList } from '@legendapp/list';
+import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-import type {LegendListRenderItemProps} from '@legendapp/list';
+import type { LegendListRenderItemProps } from '@legendapp/list';
 
-import {allRooms} from '@api/room';
-import {useSocket} from '@context/socket';
-import {useAppSelector} from '@redux/hook';
-import {ChatStackScreens} from '@navigation/chatNavigator';
+import { useSocket } from '@context/socket';
+import { useAppSelector } from '@redux/hook';
+import { deliveredMessage } from '@api/message';
+import { ChatStackScreens } from '@navigation/chatNavigator';
+import { allRooms, markAllRoomsMessagesAsDelivered } from '@api/room';
 
-import type {ChatNavNavigationProp} from '@navigation/chatNavigator';
+import type { ChatNavNavigationProp } from '@navigation/chatNavigator';
 
 function Rooms(): React.JSX.Element {
-  const {socket, isConnected} = useSocket();
+  const { socket, isConnected } = useSocket();
   const [data, setData] = useState<Room[]>([]);
-  const {session} = useAppSelector(state => state.user);
+  const [loading, setLoading] = useState<boolean>(true);
+  const { session } = useAppSelector(state => state.user);
   const navigate =
     useNavigation<ChatNavNavigationProp<ChatStackScreens.Rooms>>().navigate;
 
   const getRooms = useCallback(async () => {
-    if (!session) {
-      console.error('No session found');
-      return;
-    }
+    setLoading(true);
     try {
-      const response: Room[] = await allRooms(session.accessToken);
+      const response: Room[] = await allRooms(session?.accessToken!);
       setData(response);
+      if (response?.length) {
+        await markAllRoomsMessagesAsDelivered(session?.accessToken!);
+      }
     } catch (error) {
       console.error('Error fetching rooms:', error);
+    } finally {
+      setLoading(false);
     }
   }, [session]);
 
@@ -44,12 +48,12 @@ function Rooms(): React.JSX.Element {
     useCallback(() => {
       if (!socket || !isConnected) return;
 
-      const handleNewMessage = (newMessage: Message) => {
-        socket.emit('receiveMessage', {
-          roomId: newMessage.roomId,
+      const handleNewMessage = async (newMessage: Message) => {
+        await deliveredMessage({
           messageId: newMessage.id,
+          roomId: newMessage.roomId,
+          token: session?.accessToken!,
         });
-
         setData(prevData => {
           const roomIndex = prevData.findIndex(
             room => room.id === newMessage.roomId,
@@ -77,23 +81,24 @@ function Rooms(): React.JSX.Element {
       return () => {
         socket.off('newMessage', handleNewMessage);
       };
-    }, [socket, isConnected, setData]),
+    }, [socket, isConnected, setData, session?.accessToken]),
   );
 
   const renderItem = useCallback(
-    ({item}: LegendListRenderItemProps<Room>) => {
-      const {name, description, messages} = item;
+    ({ item }: LegendListRenderItemProps<Room>) => {
+      const { name, description, messages } = item;
 
       return (
         <TouchableOpacity
           style={styles.item}
-          onPress={() => navigate(ChatStackScreens.Chat, {room: item})}>
+          onPress={() => navigate(ChatStackScreens.Chat, { room: item })}
+        >
           <View style={styles.contentContainer}>
             <View style={styles.titleContainer}>
               <Text style={styles.title}>{name}</Text>
               <Text style={styles.description}>{description}</Text>
             </View>
-            {messages.length > 0 && (
+            {messages?.length > 0 && (
               <Text numberOfLines={2} style={styles.message}>
                 {messages[0].sender.username} : {messages[0].content}
               </Text>
@@ -103,7 +108,7 @@ function Rooms(): React.JSX.Element {
             size={24}
             color="black"
             name="chevron-forward-outline"
-            style={{alignSelf: 'center'}}
+            style={{ alignSelf: 'center' }}
           />
         </TouchableOpacity>
       );

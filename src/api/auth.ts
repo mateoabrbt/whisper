@@ -24,7 +24,7 @@ export const login = async (email: string, password: string) => {
       throw new Error(response.data?.message || 'Post login failed');
     }
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
         error: true,
@@ -35,7 +35,10 @@ export const login = async (email: string, password: string) => {
     }
     return {
       error: true,
-      message: error.message || 'An unknown error occurred',
+      message:
+        error instanceof Error
+          ? error.message
+          : String(error) || 'An unknown error occurred',
     };
   }
 };
@@ -67,7 +70,7 @@ export const signup = async (
       throw new Error(response.data?.message || 'Post register failed');
     }
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
         error: true,
@@ -78,7 +81,10 @@ export const signup = async (
     }
     return {
       error: true,
-      message: error.message || 'An unknown error occurred',
+      message:
+        error instanceof Error
+          ? error.message
+          : String(error) || 'An unknown error occurred',
     };
   }
 };
@@ -98,7 +104,7 @@ export const logout = async () => {
       throw new Error(response.data?.message || 'Post logout failed');
     }
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
         error: true,
@@ -109,7 +115,10 @@ export const logout = async () => {
     }
     return {
       error: true,
-      message: error.message || 'An unknown error occurred',
+      message:
+        error instanceof Error
+          ? error.message
+          : String(error) || 'An unknown error occurred',
     };
   }
 };
@@ -135,7 +144,7 @@ export const refresh = async (refreshToken: string) => {
       throw new Error(response.data?.message || 'Post refresh failed');
     }
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
         error: true,
@@ -146,7 +155,10 @@ export const refresh = async (refreshToken: string) => {
     }
     return {
       error: true,
-      message: error.message || 'An unknown error occurred',
+      message:
+        error instanceof Error
+          ? error.message
+          : String(error) || 'An unknown error occurred',
     };
   }
 };

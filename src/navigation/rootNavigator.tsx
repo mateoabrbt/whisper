@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import type {RouteProp} from '@react-navigation/native';
+import type { RouteProp } from '@react-navigation/native';
 import type {
   StackScreenProps,
   StackNavigationProp,
@@ -11,7 +11,7 @@ import type {
 import Loading from '@screen/loading';
 import Login from '@screen/auth/login';
 import Signup from '@screen/auth/signup';
-import {useAppSelector} from '@redux/hook';
+import { useAppSelector } from '@redux/hook';
 import ForgotPassword from '@screen/auth/forgotPassword';
 
 import BottomNavigator from './bottomNavigator';
@@ -55,7 +55,7 @@ export type RootNavRouteProp<
 
 function RootNavigator(): React.JSX.Element {
   const Stack = createStackNavigator();
-  const {status} = useAppSelector(state => state.user);
+  const { status, session } = useAppSelector(state => state.user);
 
   if (status === 'loading') {
     return <Loading />;
@@ -63,12 +63,12 @@ function RootNavigator(): React.JSX.Element {
 
   return (
     <Stack.Navigator>
-      {status === 'disconnected' ? (
+      {!session || status === 'disconnected' ? (
         <Stack.Group>
           <Stack.Screen
             component={Login}
             name={RootStackScreens.Login}
-            options={{headerShown: false}}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             component={ForgotPassword}
@@ -79,7 +79,7 @@ function RootNavigator(): React.JSX.Element {
       ) : (
         <Stack.Screen
           component={BottomNavigator}
-          options={{headerShown: false}}
+          options={{ headerShown: false }}
           name={RootStackScreens.BottomNavigator}
         />
       )}

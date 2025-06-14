@@ -1733,15 +1733,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@legendapp/list@npm:1.0.16":
-  version: 1.0.16
-  resolution: "@legendapp/list@npm:1.0.16"
+"@legendapp/list@npm:1.0.17":
+  version: 1.0.17
+  resolution: "@legendapp/list@npm:1.0.17"
   dependencies:
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10/760196301cbe5297c140714502bf10418b7d649271300b04ddb9330611af45ea490623d3c6ecbb9f76b0c16d64cb7a8629a69b03109e20e8f95807ea763dfefe
+  checksum: 10/53f66f07a7a91b4f8156269db039e22d6652c86a2186157b4aeb311b72736f52ba149a7d8474e65030e3bacaf4384f8a452da09174572a1e6ac9726d3f2a5a95
   languageName: node
   linkType: hard
 
@@ -9830,7 +9830,7 @@ __metadata:
   dependencies:
     "@babel/core": "npm:7.27.4"
     "@expo/vector-icons": "npm:14.1.0"
-    "@legendapp/list": "npm:1.0.16"
+    "@legendapp/list": "npm:1.0.17"
     "@react-native/eslint-config": "npm:0.79.3"
     "@react-navigation/bottom-tabs": "npm:7.3.14"
     "@react-navigation/elements": "npm:2.4.3"

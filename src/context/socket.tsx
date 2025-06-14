@@ -6,11 +6,11 @@ import React, {
   createContext,
 } from 'react';
 
-import {io} from 'socket.io-client';
+import { io } from 'socket.io-client';
 
-import type {Socket} from 'socket.io-client';
+import type { Socket } from 'socket.io-client';
 
-import {useAppSelector} from '@redux/hook';
+import { useAppSelector } from '@redux/hook';
 
 const URL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -21,26 +21,26 @@ interface SocketContextType {
 
 const SocketContext = createContext<SocketContextType | undefined>(undefined);
 
-export const SocketProvider: React.FC<{children: React.ReactNode}> = ({
+export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const socketRef = useRef<Socket | null>(null);
   const [isConnected, setIsConnected] = useState(false);
-  const {session} = useAppSelector(state => state.user);
+  const { session } = useAppSelector(state => state.user);
 
   useEffect(() => {
     if (!URL || !session) return;
 
     const newSocket = io(`${URL}/room`, {
       transports: ['websocket'],
-      auth: {token: session.accessToken},
+      auth: { token: session.accessToken },
     });
 
     socketRef.current = newSocket;
 
     const handleConnect = () => {
       setIsConnected(true);
-      newSocket.emit('connectToRoom');
+      newSocket.emit('connectToAllRooms');
     };
     const handleDisconnect = () => setIsConnected(false);
 
@@ -57,7 +57,7 @@ export const SocketProvider: React.FC<{children: React.ReactNode}> = ({
   }, [session]);
 
   return (
-    <SocketContext.Provider value={{socket: socketRef.current, isConnected}}>
+    <SocketContext.Provider value={{ socket: socketRef.current, isConnected }}>
       {children}
     </SocketContext.Provider>
   );

@@ -18,7 +18,7 @@ export const getUser = async (token: string) => {
       throw new Error(response.data?.message || 'Get user failed');
     }
     return response.data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       return {
         error: true,
@@ -29,7 +29,10 @@ export const getUser = async (token: string) => {
     }
     return {
       error: true,
-      message: error.message || 'An unknown error occurred',
+      message:
+        error instanceof Error
+          ? error.message
+          : String(error) || 'An unknown error occurred',
     };
   }
 };

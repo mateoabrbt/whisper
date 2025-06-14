@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import type { PayloadAction } from "@reduxjs/toolkit";
+import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from "@redux/store";
+import type { RootState } from '@redux/store';
 
 interface UserState {
   status: Status;
@@ -12,12 +12,12 @@ interface UserState {
 
 const initialState: UserState = {
   user: undefined,
-  status: "loading",
+  status: 'loading',
   session: undefined,
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   initialState: initialState,
   reducers: {
     updateStatus: (state, action: PayloadAction<Status>) => {
